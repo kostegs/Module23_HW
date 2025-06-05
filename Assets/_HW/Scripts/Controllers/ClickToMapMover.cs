@@ -1,16 +1,16 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AgentClickToMapMover : Controller
+public class ClickToMapMover : Controller
 {
-    private AgentCharacter _character;    
+    private IMovable _movableObject;    
     private InputService _inputService;
 
     private NavMeshPath _pathToTarget = new NavMeshPath();
 
-    public AgentClickToMapMover(AgentCharacter character, InputService inputService)
+    public ClickToMapMover(IMovable movableObject, InputService inputService)
     {
-        _character = character;        
+        _movableObject = movableObject;        
         _inputService = inputService;
     }
 
@@ -18,12 +18,12 @@ public class AgentClickToMapMover : Controller
     {
         Vector3 _target = _inputService.GetClickedPointOnMap();        
 
-        if (_target != Vector3.zero && _character.TryGetPath(_target, _pathToTarget))
+        if (_target != Vector3.zero)
         {
             float distanceToTarget = NavMeshUtils.GetPathLength(_pathToTarget);
 
-            _character.ResumeMove();
-            _character.SetMoveDirection(_target);
+            _movableObject.ResumeMove();
+            _movableObject.SetMoveDirection(_target);
         }
     }
 }

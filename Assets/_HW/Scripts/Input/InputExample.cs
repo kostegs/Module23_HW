@@ -16,7 +16,7 @@ public class InputExample : MonoBehaviour
         queryFilter.areaMask = NavMesh.AllAreas;
 
         _agentController = new CompositeController(
-            new AgentClickToMapMover(_agentCharacter, inputService),
+            new ClickToMapMover(_agentCharacter, inputService),
             new RotatableController(_agentCharacter, _agentCharacter));
 
         _agentController.Enable();

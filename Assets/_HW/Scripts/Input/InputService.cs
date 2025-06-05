@@ -2,15 +2,13 @@ using UnityEngine;
 
 public class InputService
 {
-    private LayerMask _layerMask;
     private IInputProcessor _inputProcessor;
 
     public IInputProcessor InputProcessor => _inputProcessor;
 
-    public InputService(IInputProcessor inputProcessor, LayerMask layerMask)
+    public InputService(IInputProcessor inputProcessor)
     {
-        _inputProcessor = inputProcessor;
-        _layerMask = layerMask;
+        _inputProcessor = inputProcessor;    
     }
 
     public Vector3 GetCurrentCursorPosition() => _inputProcessor.GetCurrentCursorPosition();
@@ -24,7 +22,7 @@ public class InputService
             Vector3 currentCursorPosition = GetCurrentCursorPosition();
             Ray cameraRay = Camera.main.ScreenPointToRay(currentCursorPosition);
 
-            if (Physics.Raycast(cameraRay.origin, cameraRay.direction, out RaycastHit hitInfo, Mathf.Infinity, _layerMask))
+            if (Physics.Raycast(cameraRay.origin, cameraRay.direction, out RaycastHit hitInfo, Mathf.Infinity))
                 return hitInfo.point;
         }
 

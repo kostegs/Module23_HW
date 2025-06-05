@@ -4,5 +4,9 @@ public interface IMovable
 {
     Vector3 CurrentVelocity { get; }
 
-    void SetMoveDirection(Vector3 inputDirection);
+    void SetMoveDirection(Vector3 moveDirection);
+
+    void StopMove();
+
+    void ResumeMove();
 }

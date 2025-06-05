@@ -29,14 +29,11 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable
         _rotator.Update(Time.deltaTime);
     }
 
-    public void SetMoveDirection(Vector3 inputDirection) => _mover.SetDestination(inputDirection);
-
+    public void SetMoveDirection(Vector3 moveDirection) => _mover.SetDestination(moveDirection);
     public void StopMove() => _mover.Stop();
 
     public void ResumeMove() => _mover.Resume();
 
     public void SetRotationDirection(Vector3 inputDirection) => _rotator.SetInputDirection(inputDirection);
-
-    public bool TryGetPath(Vector3 targetPosition, NavMeshPath pathToTarget)
-        => NavMeshUtils.TryGetPath(_agent, targetPosition, pathToTarget);    
+       
 }

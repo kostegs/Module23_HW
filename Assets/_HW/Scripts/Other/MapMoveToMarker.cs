@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InputFlagService : MonoBehaviour
+public class MapMoveToMarker : MonoBehaviour
 {
     [SerializeField] private Flag _flagPrefab;
     [SerializeField] private LayerMask _layerMask;
