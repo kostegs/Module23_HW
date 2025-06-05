@@ -30,6 +30,7 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable
     }
 
     public void SetMoveDirection(Vector3 moveDirection) => _mover.SetDestination(moveDirection);
+
     public void StopMove() => _mover.Stop();
 
     public void ResumeMove() => _mover.Resume();

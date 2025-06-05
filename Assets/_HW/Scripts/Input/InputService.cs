@@ -15,7 +15,7 @@ public class InputService
 
     public bool IsButtonDown() => _inputProcessor.IsButtonDown();
 
-    public Vector3 GetClickedPointOnMap()
+    public bool GetClickedPointOnMap(out Vector3 point)
     {
         if (IsButtonDown())
         {
@@ -23,9 +23,13 @@ public class InputService
             Ray cameraRay = Camera.main.ScreenPointToRay(currentCursorPosition);
 
             if (Physics.Raycast(cameraRay.origin, cameraRay.direction, out RaycastHit hitInfo, Mathf.Infinity))
-                return hitInfo.point;
+            {
+                point = hitInfo.point;
+                return true;
+            }                
         }
 
-        return Vector3.zero;
+        point = Vector3.zero;
+        return false;
     }
 }

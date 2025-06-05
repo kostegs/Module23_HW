@@ -4,8 +4,8 @@ public class Bootstrap : MonoBehaviour
 {
     private const int MouseButton = 0;
 
-    [SerializeField] private MapMoveToMarker _inputFlagService;        
-    [SerializeField] private InputExample _inputExample;
+    [SerializeField] private MapMoveToMarker _mapMoveToMarker;        
+    [SerializeField] private Example _Example;
 
     private void Awake()
     {
@@ -13,7 +13,7 @@ public class Bootstrap : MonoBehaviour
 
         InputService inputService = new InputService(inputProcessor);
         
-        _inputFlagService.Initialize(inputService);
-        _inputExample.Initialize(inputService);
+        _mapMoveToMarker.Initialize(inputService);
+        _Example.Initialize(inputService);
     }
 }

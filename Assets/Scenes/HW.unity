@@ -12177,11 +12177,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5963065e7cc76c943bc7b6ed5f9fa4ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputFlagService: {fileID: 1688157604}
-  _walkableMask:
-    serializedVersion: 2
-    m_Bits: 8
-  _inputExample: {fileID: 1967593074}
+  _mapMoveToMarker: {fileID: 1688157606}
+  _Example: {fileID: 1967593076}
 --- !u!4 &767540533
 Transform:
   m_ObjectHideFlags: 0
@@ -19811,6 +19808,8 @@ GameObject:
   - component: {fileID: 1446956497}
   - component: {fileID: 1446956498}
   - component: {fileID: 1446956499}
+  - component: {fileID: 1446956500}
+  - component: {fileID: 1446956501}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -19827,7 +19826,7 @@ Transform:
   m_GameObject: {fileID: 1446956496}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.498, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19870,6 +19869,54 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!54 &1446956500
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446956496}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &1446956501
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446956496}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.7942911, z: 1}
+  m_Center: {x: 0, y: 0.91661114, z: 0}
 --- !u!1001 &1450010550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22189,31 +22236,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1688157605}
-  - component: {fileID: 1688157604}
+  - component: {fileID: 1688157606}
   m_Layer: 0
-  m_Name: InputFlagService
+  m_Name: MapMoveToMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1688157604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1688157603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df134d3c7b6eebb4ca85288ac4ba7e82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _flagPrefab: {fileID: 6873313261661065961, guid: e662b652bf75a7545a96e493d3939e34,
-    type: 3}
-  _layerMask:
-    serializedVersion: 2
-    m_Bits: 8
 --- !u!4 &1688157605
 Transform:
   m_ObjectHideFlags: 0
@@ -22229,6 +22259,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1688157606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688157603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40f527687253e1e4882a2153825e8147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flagPrefab: {fileID: 5495611075610200158, guid: 75b849eb8ac495243a35ac2b73b5c5ba,
+    type: 3}
+  _clickEffectPrefab: {fileID: 682839312221966217, guid: 67827f231e3a54d4c9076f02c4214467,
+    type: 3}
 --- !u!1001 &1695488613
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26418,27 +26464,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1967593075}
-  - component: {fileID: 1967593074}
+  - component: {fileID: 1967593076}
   m_Layer: 0
-  m_Name: InputExample
+  m_Name: Example
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1967593074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1967593073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d67432a034c307f418f6b11f443e5bd4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _agentCharacter: {fileID: 1446956498}
 --- !u!4 &1967593075
 Transform:
   m_ObjectHideFlags: 0
@@ -26454,6 +26487,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1967593076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967593073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f253dff7d9fa8c74fa464e86573077e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _agentCharacter: {fileID: 1446956498}
 --- !u!1001 &1971976246
 PrefabInstance:
   m_ObjectHideFlags: 0

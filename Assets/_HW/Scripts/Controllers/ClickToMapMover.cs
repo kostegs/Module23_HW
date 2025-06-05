@@ -16,14 +16,12 @@ public class ClickToMapMover : Controller
 
     protected override void UpdateLogic(float deltaTime)
     {
-        Vector3 _target = _inputService.GetClickedPointOnMap();        
-
-        if (_target != Vector3.zero)
-        {
+        if (_inputService.GetClickedPointOnMap(out Vector3 target))
+        {        
             float distanceToTarget = NavMeshUtils.GetPathLength(_pathToTarget);
 
             _movableObject.ResumeMove();
-            _movableObject.SetMoveDirection(_target);
+            _movableObject.SetMoveDirection(target);
         }
     }
 }
