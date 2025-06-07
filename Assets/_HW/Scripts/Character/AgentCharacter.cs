@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AgentCharacter : MonoBehaviour, IMovable, IRotatable
+public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IDamageable
 {
     private NavMeshAgent _agent;
 
@@ -36,5 +36,9 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable
     public void ResumeMove() => _mover.Resume();
 
     public void SetRotationDirection(Vector3 inputDirection) => _rotator.SetInputDirection(inputDirection);
-       
+
+    public void TakeDamage(int damage)
+    {
+        
+    }
 }
