@@ -6,6 +6,7 @@ public class Bootstrap : MonoBehaviour
 
     [SerializeField] private MapMoveToMarker _mapMoveToMarker;        
     [SerializeField] private Example _Example;
+    [SerializeField] private AgentCharacter _character;
 
     private void Awake()
     {
@@ -15,5 +16,6 @@ public class Bootstrap : MonoBehaviour
         
         _mapMoveToMarker.Initialize(inputService);
         _Example.Initialize(inputService);
+        _character.Initialize();
     }
 }
