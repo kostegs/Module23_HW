@@ -9,6 +9,7 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IDamageable
     private Rotator _rotator;
 
     private Health _health;
+    private int _maxHealth;
 
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _rotationSpeed;
@@ -25,7 +26,8 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IDamageable
         _mover = new AgentMover(_agent, _movementSpeed);
         _rotator = new Rotator(transform, _rotationSpeed);
 
-        _health = new Health();
+        _health = new Health(_startHealthValue);
+        _maxHealth = _startHealthValue;
     }
     
     private void Update()
@@ -44,4 +46,6 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IDamageable
     public void TakeDamage(int damage) => _health.Reduce(damage);
 
     public int GetCurrentHealth() => _health.Value;
+
+    public int GetMaxHealth() => _maxHealth;
 }

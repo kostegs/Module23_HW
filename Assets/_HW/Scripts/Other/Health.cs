@@ -6,6 +6,11 @@ public class Health
 
     public int Value => _value;
 
+    public Health(int value)
+    {
+        _value = value;
+    }
+
     public void Reduce(int value)
     {
         if (_value < 0)
