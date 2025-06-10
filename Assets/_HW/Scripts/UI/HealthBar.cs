@@ -26,8 +26,6 @@ public class HealthBar : MonoBehaviour
             currentHealth = (float)_damageable.GetCurrentHealth() / _damageable.GetMaxHealth();
             _filledImage.fillAmount = currentHealth;
             _text.text = _cachedHealth.ToString("0.####") + "%";
-
-            Debug.Log(_cachedHealth);
         }
     }
 }

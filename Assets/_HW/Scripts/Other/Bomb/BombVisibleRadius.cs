@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
@@ -52,7 +51,6 @@ public class BombVisibleRadius : MonoBehaviour
 
     IEnumerator ChangeVisibleSphereColor()
     {
-        Debug.Log("Started coroutine");
         float elapsedTime = 0;
         Color startColor = _material.color;
         Color targetColor = _shimmerColors.Dequeue();
