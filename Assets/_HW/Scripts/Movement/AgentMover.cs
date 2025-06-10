@@ -20,8 +20,8 @@ public class AgentMover
 
     public void SetDestination(Vector3 position)
     {
-        if (TryGetPath(position, _navMeshPath))
-            _agent.SetDestination(position);
+        if (TryGetPath(position, _navMeshPath))        
+            _agent.SetDestination(position);            
     }
 
     public void Stop() => _agent.isStopped = true;
