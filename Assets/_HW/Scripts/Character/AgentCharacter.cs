@@ -14,6 +14,7 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IDamageable
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private int _startHealthValue;
+    [SerializeField] private AgentCharacterView _view;
 
     public Vector3 CurrentVelocity => _mover.CurrentVelocity;
     public Quaternion CurrentRotation => _rotator.CurrentRotation;
@@ -28,6 +29,8 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IDamageable
 
         _health = new Health(_startHealthValue);
         _maxHealth = _startHealthValue;
+
+        _view.Initialize(this);
     }
     
     private void Update()
@@ -47,5 +50,5 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IDamageable
 
     public int GetCurrentHealth() => _health.Value;
 
-    public int GetMaxHealth() => _maxHealth;
+    public int GetMaxHealth() => _maxHealth;    
 }

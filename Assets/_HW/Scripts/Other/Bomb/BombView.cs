@@ -31,11 +31,7 @@ public class BombView : MonoBehaviour
         _countdownTimer = countdownTimer;
     }
 
-    private void Update()
-    {
-        DrawVisibleRadius();
-    } 
-
+    private void Update() => DrawVisibleRadius();
     public void MakeExplosionEffects()
     {
         if (countdownCoroutine == null)
@@ -74,6 +70,4 @@ public class BombView : MonoBehaviour
         Destroy(explosionEffect.gameObject, TimeToLiveExplosionEffect);
         _effectsFinished = true;
     }
-
-    
 }
