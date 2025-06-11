@@ -28,6 +28,8 @@ public class AgentMover
 
     public void Resume() => _agent.isStopped = false;
 
+    public void ChangeSpeed(float newSpeed) => _agent.speed = newSpeed;
+
     private bool TryGetPath(Vector3 targetPosition, NavMeshPath pathToTarget)
        => NavMeshUtils.TryGetPath(_agent, targetPosition, pathToTarget);
 }
