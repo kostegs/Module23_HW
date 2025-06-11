@@ -66,6 +66,4 @@ public class BombVisibleRadius : MonoBehaviour
 
         _colorChangeCoroutine = null;
     }
-
-
 }

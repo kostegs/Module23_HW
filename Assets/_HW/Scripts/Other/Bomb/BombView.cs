@@ -32,6 +32,7 @@ public class BombView : MonoBehaviour
     }
 
     private void Update() => DrawVisibleRadius();
+
     public void MakeExplosionEffects()
     {
         if (countdownCoroutine == null)

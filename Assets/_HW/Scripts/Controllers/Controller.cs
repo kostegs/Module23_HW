@@ -6,13 +6,13 @@ public abstract class Controller
 
     public virtual void Disable() => _IsEnabled = false;
 
-    public void Update(float deltaTime)
+    public void Update()
     {
         if (_IsEnabled == false)
             return;
 
-        UpdateLogic(deltaTime);
+        UpdateLogic();
     }
 
-    protected abstract void UpdateLogic(float deltaTime);
+    protected abstract void UpdateLogic();
 }

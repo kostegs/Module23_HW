@@ -9,7 +9,7 @@ public class RotatableController : Controller
         _rotatable = rotatable;
     }
 
-    protected override void UpdateLogic(float deltaTime)
+    protected override void UpdateLogic()
     {
         _rotatable.SetRotationDirection(_movable.CurrentVelocity);
     }

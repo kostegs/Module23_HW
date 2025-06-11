@@ -14,7 +14,7 @@ public class ClickToMapMover : Controller
         _inputService = inputService;
     }
 
-    protected override void UpdateLogic(float deltaTime)
+    protected override void UpdateLogic()
     {
         if (_inputService.GetClickedPointOnMap(out Vector3 target))
         {        

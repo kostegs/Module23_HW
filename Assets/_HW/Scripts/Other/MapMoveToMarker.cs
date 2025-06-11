@@ -25,7 +25,6 @@ public class MapMoveToMarker : MonoBehaviour
             _flag.gameObject.SetActive(true);
             _clickEffect.transform.position = _flag.transform.position + Vector3.up;
             _clickEffect.Play();
-        }
-            
+        }            
     }
 }

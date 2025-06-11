@@ -27,6 +27,6 @@ public class Example : MonoBehaviour
         if (_agentCharacter.GetCurrentHealth() == 0)
             return;
 
-        _agentController.Update(Time.deltaTime);        
+        _agentController.Update();        
     }
 }

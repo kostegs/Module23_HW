@@ -5,9 +5,7 @@ public class Rotator
     private const float MinimalMagnitude = 0.05f;
 
     private Transform _transform;
-
     private float _rotationSpeed;
-
     private Vector3 _currentDirection;
 
     public Rotator(Transform transform, float rotationSpeed)

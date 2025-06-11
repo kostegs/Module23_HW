@@ -24,9 +24,9 @@ public class CompositeController : Controller
 
     }
 
-    protected override void UpdateLogic(float deltaTime)
+    protected override void UpdateLogic()
     {
         foreach (Controller controller in _controllers)
-            controller.Update(deltaTime);
+            controller.Update();
     }
 }
