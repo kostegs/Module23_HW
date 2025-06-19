@@ -4,10 +4,14 @@ using UnityEngine.AI;
 public class AgentMover
 {
     private const float MoveAcceleration = 999f;
+    private const float CoeeficiencyInMovingProcess = 0.0025f;
+
     private NavMeshAgent _agent;
     private NavMeshPath _navMeshPath;
 
     public Vector3 CurrentVelocity => _agent.desiredVelocity;
+
+    public bool InMovingProcess => CurrentVelocity.sqrMagnitude >= CoeeficiencyInMovingProcess;
 
     public AgentMover(NavMeshAgent agent, float movementSpeed)
     {

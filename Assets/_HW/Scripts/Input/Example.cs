@@ -16,7 +16,7 @@ public class Example : MonoBehaviour
         queryFilter.areaMask = NavMesh.AllAreas;
 
         _agentController = new CompositeController(
-            new ClickToMapMover(_agentCharacter, inputService),
+            new AgentCharacterClickToMapMover(_agentCharacter, inputService),
             new RotatableController(_agentCharacter, _agentCharacter));
 
         _agentController.Enable();

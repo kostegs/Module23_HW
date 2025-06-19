@@ -64,11 +64,11 @@ Material:
     - _ChangeColorCoefficiency: 0
     - _Cull: 2
     - _DstBlend: 10
-    - _InBorderWidth: 0.03
-    - _OutBorderWidth: 0.11
+    - _InBorderWidth: 0.008
+    - _OutBorderWidth: 0.001
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Radius: 0.28
+    - _Radius: 0.29
     - _ReceiveShadows: 1
     - _SrcBlend: 5
     - _Surface: 1
@@ -79,6 +79,6 @@ Material:
     m_Colors:
     - _CircleColor: {r: 0, g: 0, b: 0, a: 1}
     - _GlowColor: {r: 1, g: 0.1137255, b: 0, a: 1}
-    - _GlowColor1: {r: 0.14374542, g: 1, b: 0, a: 0}
+    - _GlowColor1: {r: 0, g: 1, b: 0.086420536, a: 0}
     - _GlowColor2: {r: 0.9622641, g: 0.6420506, b: 0.600961, a: 0}
   m_BuildTextureStacks: []

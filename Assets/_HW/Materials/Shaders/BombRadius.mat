@@ -65,7 +65,7 @@ Material:
     - _Cull: 2
     - _DstBlend: 10
     - _InBorderWidth: 0.06
-    - _OutBorderWidth: 0.15
+    - _OutBorderWidth: 0.04
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Radius: 0.4

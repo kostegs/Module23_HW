@@ -1,25 +1,36 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IDamageable
+public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IJumpable, IDamageable
 {
     private NavMeshAgent _agent;
 
     private AgentMover _mover;
     private Rotator _rotator;
+    private AgentJumper _jumper;
 
     private Health _health;
-    private int _maxHealth;
+    private int _maxHealth;    
 
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _movementSpeedInjured;
     [SerializeField] private float _rotationSpeed;
-    [SerializeField] private int _startHealthValue;
-    [SerializeField] private AgentCharacterView _view;
+    
+    [SerializeField] private float _jumpSpeed;
+    [SerializeField] private AnimationCurve _jumpCurve;
+
+    [SerializeField] private int _startHealthValue;    
     [SerializeField] private int _healthToChangeToinjured;
 
+    [SerializeField] private CharacterView _view;    
+
     public Vector3 CurrentVelocity => _mover.CurrentVelocity;
+
     public Quaternion CurrentRotation => _rotator.CurrentRotation;
+
+    public bool InMovingProcess => _mover.InMovingProcess;
+
+    public bool InJumpingProcess => _jumper.IsJumpProcess;
 
     public void Initialize()
     {
@@ -28,11 +39,12 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IDamageable
 
         _mover = new AgentMover(_agent, _movementSpeed);
         _rotator = new Rotator(transform, _rotationSpeed);
+        _jumper = new AgentJumper(_jumpSpeed, _agent, this, _jumpCurve);
 
         _health = new Health(_startHealthValue);
         _maxHealth = _startHealthValue;
 
-        _view.Initialize(this, this, _healthToChangeToinjured);
+        _view.Initialize(this, this, this, _healthToChangeToinjured);
     }
     
     private void Update()
@@ -45,6 +57,14 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IDamageable
     public void StopMove() => _mover.Stop();
 
     public void ResumeMove() => _mover.Resume();
+
+    public void Jump()
+    {
+    }
+
+    public void Jump(OffMeshLinkData offMeshLinkData) => _jumper.Jump(offMeshLinkData);  
+        
+    public bool IsOnNavMeshLink(out OffMeshLinkData offMeshLinkData) => NavMeshUtils.IsOnNavMeshLink(_agent, out offMeshLinkData);
 
     public void SetRotationDirection(Vector3 inputDirection) => _rotator.SetInputDirection(inputDirection);
 
@@ -66,5 +86,5 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IDamageable
 
     public int GetCurrentHealth() => _health.Value;
 
-    public int GetMaxHealth() => _maxHealth;    
+    public int GetMaxHealth() => _maxHealth;
 }

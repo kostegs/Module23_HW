@@ -1,10 +1,12 @@
 using UnityEngine;
 
-public class AgentCharacterView : MonoBehaviour
+public class CharacterView : MonoBehaviour
 {
     private readonly int ExplosionInjureKey = Animator.StringToHash("Explosion");
     private readonly int DeathKey = Animator.StringToHash("Death");
-    private readonly string IsRunningKey = "IsRunning";
+    private readonly int IsRunningKey = Animator.StringToHash("IsRunning");
+    private readonly int IsJumpingKey = Animator.StringToHash("IsJumping");
+
     private const int InjuredLayerIndex = 1;
     private const int ExplosionInjuredLayerIndex = 2;
     private const int InjuredLayerWeightOn = 2;
@@ -15,14 +17,21 @@ public class AgentCharacterView : MonoBehaviour
 
     private IMovable _movable;
     private IDamageable _damageable;
+    private IJumpable _jumpable;
+
     private bool _isInitialized;
     private bool _switchedToInjureAnimations;
-    private int _healthToSwitchToInjuredAnimations;
+    private int _healthToSwitchToInjuredAnimations;    
 
-    public void Initialize(IMovable movable, IDamageable damageable, int healthToSwitchToInjuredAnimations)
+    public void Initialize(
+        IMovable movable,
+        IDamageable damageable,
+        IJumpable jumpable,
+        int healthToSwitchToInjuredAnimations)
     {
         _movable = movable;
         _damageable = damageable;
+        _jumpable = jumpable;
         _healthToSwitchToInjuredAnimations = healthToSwitchToInjuredAnimations;
 
         _isInitialized = true;        
@@ -33,7 +42,17 @@ public class AgentCharacterView : MonoBehaviour
         if (_isInitialized == false)
             return;
 
-        if (_movable.CurrentVelocity.magnitude > 0.05f)            
+        if (_jumpable.InJumpingProcess)
+        {
+            _animator.SetBool(IsJumpingKey, true);
+            return;
+        }
+        else
+        {
+            _animator.SetBool(IsJumpingKey, false);
+        }            
+
+        if (_movable.InMovingProcess)            
             _animator.SetBool(IsRunningKey, true);        
         else        
             _animator.SetBool(IsRunningKey, false);               

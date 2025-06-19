@@ -20,5 +20,17 @@ public class NavMeshUtils
             return true;
 
         return false;
-    }    
+    }
+    
+    public static bool IsOnNavMeshLink(NavMeshAgent agent, out OffMeshLinkData offMeshLinkData)
+    {
+        if (agent.isOnOffMeshLink)
+        {
+            offMeshLinkData = agent.currentOffMeshLinkData;
+            return true;
+        }
+
+        offMeshLinkData = default;
+        return false;
+    }
 }
