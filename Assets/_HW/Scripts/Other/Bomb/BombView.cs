@@ -6,28 +6,19 @@ public class BombView : MonoBehaviour
 {
     private const float TimeToLiveExplosionEffect = 3f;
 
-    [SerializeField] private ParticleSystem _explosiionEffectPrefab;
-    [SerializeField] private BombVisibleRadiusShader _visibleRadius;
-    [SerializeField] private bool _drawVisibleRadius;
-    [SerializeField] private Color[] _shimmerColors;
+    [SerializeField] private ParticleSystem _explosiionEffectPrefab;    
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private Transform textPosition;
     [SerializeField] private Canvas _countdownTextCanvas;
-    
-    private Bomb _parentBomb;   
+
+    [SerializeField] private ShimmingGlowingCircle _visibleRadius;    
+
     private Coroutine countdownCoroutine;
     private bool _effectsFinished;
     private float _countdownTimer;
 
     public void Initialize(Bomb bomb, float countdownTimer)
     {
-        _parentBomb = bomb;
-
-        _visibleRadius.gameObject.SetActive(_drawVisibleRadius);
-
-        if (_drawVisibleRadius)
-            _visibleRadius.Initialize();
-
         _countdownTimer = countdownTimer;
     }
     

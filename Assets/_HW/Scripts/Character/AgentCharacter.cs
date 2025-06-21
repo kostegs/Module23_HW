@@ -22,7 +22,7 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IJumpable, ID
     [SerializeField] private int _startHealthValue;    
     [SerializeField] private int _healthToChangeToinjured;
 
-    [SerializeField] private CharacterView _view;    
+    [SerializeField] private AgentCharacterView _view;    
 
     public Vector3 CurrentVelocity => _mover.CurrentVelocity;
 
