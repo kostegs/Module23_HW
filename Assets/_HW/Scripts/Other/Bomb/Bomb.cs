@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Bomb : MonoBehaviour
@@ -6,37 +7,28 @@ public class Bomb : MonoBehaviour
     [SerializeField] private int _explosiveDamage;
     [SerializeField] private LayerMask _explosiveObjectsMask;
     [SerializeField] private BombView _view;
+    [SerializeField] private BombSoundService _soundService;
     [SerializeField] private float _timeToExplode;
 
-    public float ExplosiveRadius => _explosiveRadius;
-    private bool IsDestroying;
+    public float ExplosiveRadius => _explosiveRadius;    
+
+    private Coroutine _destroyingCoroutine;
 
     private void Awake()
     {
         _view.Initialize(this, _timeToExplode);
+        _soundService.Initialize();
     }
 
     private void Update()
     {
-        if (IsDestroying)
-        {
-            if (_view.EffectsFinished())
-            {
-                IDamageable damageable = GetDamageableInRadius();
-                
-                if(damageable != null)
-                    damageable.TakeDamage(_explosiveDamage);                                   
-
-                Destroy(this.gameObject);
-            }
-
+        if (_destroyingCoroutine != null)
             return;
-        }
 
         if (GetDamageableInRadius() != null)
         {
-            IsDestroying = true;
             _view.MakeExplosionEffects();
+            _destroyingCoroutine = StartCoroutine(ProcessDestroying());
         }                    
     }
 
@@ -59,5 +51,23 @@ public class Bomb : MonoBehaviour
         }
 
         return null;
+    }
+
+    private IEnumerator ProcessDestroying()
+    {
+        while (_view.EffectsFinished() == false)
+            yield return null;
+
+        IDamageable damageable = GetDamageableInRadius();
+
+        if (damageable != null)
+            damageable.TakeDamage(_explosiveDamage);
+
+        _soundService.ProcessExplosion();
+        _view.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(_soundService.ExplosionAudioLength);
+
+        Destroy(this.gameObject);
     }
 }

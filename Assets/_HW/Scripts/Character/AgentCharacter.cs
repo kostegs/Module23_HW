@@ -22,7 +22,8 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IJumpable, ID
     [SerializeField] private int _startHealthValue;    
     [SerializeField] private int _healthToChangeToinjured;
 
-    [SerializeField] private AgentCharacterView _view;    
+    [SerializeField] private AgentCharacterView _view;
+    [SerializeField] private AgentCharacterSoundService _soundService;
 
     public Vector3 CurrentVelocity => _mover.CurrentVelocity;
 
@@ -45,6 +46,7 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IJumpable, ID
         _maxHealth = _startHealthValue;
 
         _view.Initialize(this, this, this, _healthToChangeToinjured);
+        _soundService.Initialize(this, this);
     }
     
     private void Update()
@@ -75,13 +77,19 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IJumpable, ID
         if (_health.Value <= 0)
         {            
             _view.ProcessDeath();
+            _soundService.ProcessDeath();
             return;
         }            
 
         _view.ProcessInjure();
+        _soundService.ProcessInjure();
 
-        if(_health.Value <= _healthToChangeToinjured)         
-            _mover.ChangeSpeed(_movementSpeedInjured);        
+        if(_health.Value <= _healthToChangeToinjured)
+        {
+            _mover.ChangeSpeed(_movementSpeedInjured);
+            _soundService.SetInjuredState();
+        }         
+            
     }
 
     public int GetCurrentHealth() => _health.Value;

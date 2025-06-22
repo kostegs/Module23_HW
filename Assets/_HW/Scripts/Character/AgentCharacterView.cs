@@ -25,15 +25,15 @@ public class AgentCharacterView : MonoBehaviour
     [SerializeField] private float _injuredBlinkTime;
     [SerializeField] private float _timeToShowShimCircleGlow;
 
-    [SerializeField] private AgentCharacterAudio _agentCharacterAudio;
-
     private IMovable _movable;
     private IDamageable _damageable;
     private IJumpable _jumpable;
 
     private bool _isInitialized;
     private bool _switchedToInjureAnimations;
-    private int _healthToSwitchToInjuredAnimations;    
+    private int _healthToSwitchToInjuredAnimations;
+
+    private Coroutine _injuredShimmerCoroutine;
 
     public void Initialize(
         IMovable movable,
@@ -44,9 +44,7 @@ public class AgentCharacterView : MonoBehaviour
         _movable = movable;
         _damageable = damageable;
         _jumpable = jumpable;
-        _healthToSwitchToInjuredAnimations = healthToSwitchToInjuredAnimations;
-
-        _agentCharacterAudio.Initialize(_movable);        
+        _healthToSwitchToInjuredAnimations = healthToSwitchToInjuredAnimations;    
 
         _isInitialized = true;        
     }
@@ -91,9 +89,12 @@ public class AgentCharacterView : MonoBehaviour
 
     private void GlowingCircleProcessInjure()
     {
+        if (_injuredShimmerCoroutine != null)
+            StopCoroutine(_injuredShimmerCoroutine);
+
         (Color color1, Color color2) = _glowingCircle.GetColors();
 
-        StartCoroutine(GlowingCircleChangeColors(_glowCircleColorInjured1, _glowCircleColorInjured2, color1, _injuredBlinkTime, _timeToShowShimCircleGlow));
+        _injuredShimmerCoroutine = StartCoroutine(GlowingCircleChangeColors(_glowCircleColorInjured1, _glowCircleColorInjured2, color1, _injuredBlinkTime, _timeToShowShimCircleGlow));
     }
 
     IEnumerator GlowingCircleChangeColors(Color color1, Color color2, Color colorToRestore, float blinkTime, float timeToShim)
@@ -105,6 +106,8 @@ public class AgentCharacterView : MonoBehaviour
 
         _glowingCircle.SetColors(colorToRestore, colorToRestore);
         _glowingCircle.SetBlinkTime(TurnOffShimming);
+
+        _injuredShimmerCoroutine = null;
 
         yield return null;
     }
