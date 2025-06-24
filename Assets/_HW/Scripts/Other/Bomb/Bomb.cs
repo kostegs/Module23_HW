@@ -15,8 +15,7 @@ public class Bomb : MonoBehaviour
     private Coroutine _destroyingCoroutine;
 
     private void Awake()
-    {
-        _view.Initialize(this, _timeToExplode);
+    {        
         _soundService.Initialize();
     }
 
@@ -25,11 +24,10 @@ public class Bomb : MonoBehaviour
         if (_destroyingCoroutine != null)
             return;
 
-        if (GetDamageableInRadius() != null)
-        {
-            _view.MakeExplosionEffects();
-            _destroyingCoroutine = StartCoroutine(ProcessDestroying());
-        }                    
+        IDamageable damageable = GetDamageableInRadius();
+
+        if (damageable != null)        
+            _destroyingCoroutine = StartCoroutine(ProcessDestroying(damageable));                            
     }
 
     private void OnDrawGizmos()
@@ -53,21 +51,31 @@ public class Bomb : MonoBehaviour
         return null;
     }
 
-    private IEnumerator ProcessDestroying()
+    private IEnumerator ProcessDestroying(IDamageable damageable)
     {
-        while (_view.EffectsFinished() == false)
-            yield return null;
-
-        IDamageable damageable = GetDamageableInRadius();
-
-        if (damageable != null)
-            damageable.TakeDamage(_explosiveDamage);
-
+        yield return StartCoroutine(CountdownBeforeExplode());
+        
+        _view.ProcessExplosion();        
         _soundService.ProcessExplosion();
+
+        damageable.TakeDamage(_explosiveDamage);
         _view.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(_soundService.ExplosionAudioLength);
 
         Destroy(this.gameObject);
+    }
+
+    private IEnumerator CountdownBeforeExplode()
+    {
+        float timer = _timeToExplode;
+        _view.PrepareCountdown();
+        
+        while (timer > 0)
+        {
+            _view.ChangeCountdownText(Mathf.Ceil(timer).ToString());
+            yield return new WaitForSeconds(1f);
+            timer -= 1f;
+        }
     }
 }

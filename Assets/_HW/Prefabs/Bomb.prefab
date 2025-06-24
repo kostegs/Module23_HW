@@ -19827,7 +19827,7 @@ Transform:
   m_GameObject: {fileID: 4288361402268013573}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.33, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19987,7 +19987,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _explosiionEffectPrefab: {fileID: 1552934804351949201, guid: e70058dca29e5f94f8bac128051a51bb,
     type: 3}
-  countdownText: {fileID: 2984534975126959587}
+  _countdownText: {fileID: 2984534975126959587}
   textPosition: {fileID: 378090588670547658}
   _countdownTextCanvas: {fileID: 1172192785778792223}
   _visibleRadius: {fileID: 5800201422417831428}
@@ -20016,7 +20016,7 @@ Transform:
   m_GameObject: {fileID: 8534467737046549920}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.73, z: 0}
+  m_LocalPosition: {x: 0.25, y: 1.73, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20075,7 +20075,7 @@ MonoBehaviour:
     m_Bits: 64
   _view: {fileID: 584381356310397720}
   _soundService: {fileID: 8844227302861400933}
-  _timeToExplode: 1
+  _timeToExplode: 3
 --- !u!1001 &1160861676367561333
 PrefabInstance:
   m_ObjectHideFlags: 0
