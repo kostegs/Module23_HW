@@ -37,6 +37,7 @@ public class UITurnOnOffButton : MonoBehaviour, ITurnOnTurnOffButton
     {
         if (_isMouseOver == false)
         {
+            Debug.Log("Mouse over");
             _isMouseOver = true;
             _cachedScale = transform.localScale;
             transform.localScale = Vector3.Scale(transform.localScale, new Vector3(LocalScaleCoefficiency, LocalScaleCoefficiency, LocalScaleCoefficiency));

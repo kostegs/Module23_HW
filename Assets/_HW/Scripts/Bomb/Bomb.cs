@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Bomb : MonoBehaviour
@@ -24,10 +25,8 @@ public class Bomb : MonoBehaviour
         if (_destroyingCoroutine != null)
             return;
 
-        IDamageable damageable = GetDamageableInRadius();
-
-        if (damageable != null)        
-            _destroyingCoroutine = StartCoroutine(ProcessDestroying(damageable));                            
+        if (GetDamageableInRadius(out List<IDamageable> damageableObjects))        
+            _destroyingCoroutine = StartCoroutine(ProcessDestroying());                            
     }
 
     private void OnDrawGizmos()
@@ -36,29 +35,32 @@ public class Bomb : MonoBehaviour
         Gizmos.DrawSphere(transform.position, _explosiveRadius);
     }
 
-    private IDamageable GetDamageableInRadius()
+    private bool GetDamageableInRadius(out List<IDamageable> damageableObjects)
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, _explosiveRadius, _explosiveObjectsMask);
+        damageableObjects = new List<IDamageable>();
 
         foreach (Collider collider in hitColliders)
         {
             if (collider.TryGetComponent<IDamageable>(out IDamageable damageable))
-            {
-                return damageable;
-            }                
+                damageableObjects.Add(damageable);                            
         }
 
-        return null;
+        return damageableObjects.Count > 0;
     }
 
-    private IEnumerator ProcessDestroying(IDamageable damageable)
+    private IEnumerator ProcessDestroying()
     {
         yield return StartCoroutine(CountdownBeforeExplode());
         
         _view.ProcessExplosion();        
         _soundService.ProcessExplosion();
 
-        damageable.TakeDamage(_explosiveDamage);
+        GetDamageableInRadius(out List<IDamageable> damageableObjects);
+
+        foreach (IDamageable damageable in damageableObjects)
+            damageable.TakeDamage(_explosiveDamage);
+
         _view.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(_soundService.ExplosionAudioLength);

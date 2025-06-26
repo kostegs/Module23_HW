@@ -13,16 +13,19 @@ public class SoundService : MonoBehaviour
     private float _cachedMusicVolume;
     private float _cachedEffectsVolume;
 
-    public void TurnMusicOnOff(bool turnOn)
+    public void TurnFxOnOff(bool turnOn) => TurnSoundOnOff(EffectsKey, turnOn, _cachedEffectsVolume);
+    public void TurnMusicOnOff(bool turnOn) => TurnSoundOnOff(MusicKey, turnOn, _cachedMusicVolume);    
+
+    private void TurnSoundOnOff(string key, bool turnOn, float cachedVolume)
     {
         if (turnOn)
         {
-            _audioMixer.SetFloat(MusicKey, _cachedMusicVolume);
+            _audioMixer.SetFloat(key, cachedVolume);
         }
         else
         {
-            _audioMixer.GetFloat(MusicKey, out _cachedMusicVolume);
-            _audioMixer.SetFloat(MusicKey, OffVolumeValue);
+            _audioMixer.GetFloat(key, out cachedVolume);
+            _audioMixer.SetFloat(key, OffVolumeValue);
         }
     }
 }

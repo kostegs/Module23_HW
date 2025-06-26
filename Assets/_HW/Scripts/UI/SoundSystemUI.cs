@@ -21,7 +21,7 @@ public class SoundSystemUI : MonoBehaviour
         _raycastResults = new List<RaycastResult>();
         _pointerEventData = new PointerEventData(EventSystem.current);
         _soundService = soundService;
-    }    
+    }
 
     void Update()
     {
@@ -32,22 +32,22 @@ public class SoundSystemUI : MonoBehaviour
 
         _newHoveredButton = null;
 
-        foreach (RaycastResult r in _raycastResults)
+        foreach (RaycastResult r in _raycastResults)            
             if (r.gameObject.TryGetComponent<UITurnOnOffButton>(out UITurnOnOffButton clickableButton))
             {
                 _newHoveredButton = clickableButton;
                 break;
             }
 
-        if (_currentHoveredButton != null && _newHoveredButton == null)
+        if (_currentHoveredButton != _newHoveredButton)
         {
-            _currentHoveredButton.OnMouseExit();
-            _currentHoveredButton = null;
-        }
-        else if (_currentHoveredButton == null && _newHoveredButton != null)
-        {
+            if (_currentHoveredButton != null)
+                _currentHoveredButton.OnMouseExit();
+
+            if (_newHoveredButton != null)
+                _newHoveredButton.OnMouseOver();
+
             _currentHoveredButton = _newHoveredButton;
-            _currentHoveredButton.OnMouseOver();
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -58,7 +58,8 @@ public class SoundSystemUI : MonoBehaviour
 
                 if (_currentHoveredButton == _musicButton)
                     _soundService.TurnMusicOnOff(isTurnOn);
+                else if (_currentHoveredButton == _effectsButton)
+                    _soundService.TurnFxOnOff(isTurnOn);
             }
-                
     }
 }
