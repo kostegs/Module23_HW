@@ -8,6 +8,8 @@ public class Bootstrap : MonoBehaviour
     [SerializeField] private Example _Example;
     [SerializeField] private AgentCharacter _character;
     [SerializeField] private HealthBar _healthBar;
+    [SerializeField] private SoundSystemUI _soundSystemUI;
+    [SerializeField] private SoundService _soundService;
 
     private void Awake()
     {
@@ -19,5 +21,6 @@ public class Bootstrap : MonoBehaviour
         _Example.Initialize(inputService);
         _character.Initialize();
         _healthBar.Initialize(_character);
+        _soundSystemUI.Initialize(_soundService);
     }
 }

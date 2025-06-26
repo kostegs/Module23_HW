@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputService
 {
@@ -17,7 +18,7 @@ public class InputService
 
     public bool GetClickedPointOnMap(out Vector3 point)
     {
-        if (IsButtonDown())
+        if (IsButtonDown() && EventSystem.current.IsPointerOverGameObject() == false)
         {
             Vector3 currentCursorPosition = GetCurrentCursorPosition();
             Ray cameraRay = Camera.main.ScreenPointToRay(currentCursorPosition);
