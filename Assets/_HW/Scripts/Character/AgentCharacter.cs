@@ -75,7 +75,8 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IJumpable, ID
         _health.Reduce(damage);
 
         if (_health.Value <= 0)
-        {            
+        {
+            StopMove();
             _view.ProcessDeath();
             _soundService.ProcessDeath();
             return;
