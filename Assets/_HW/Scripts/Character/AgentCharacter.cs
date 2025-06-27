@@ -23,7 +23,7 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IJumpable, ID
     [SerializeField] private int _healthToChangeToinjured;
 
     [SerializeField] private AgentCharacterView _view;
-    [SerializeField] private AgentCharacterSoundService _soundService;
+    [SerializeField] private AgentCharacterSound _soundService;
 
     public Vector3 CurrentVelocity => _mover.CurrentVelocity;
 
@@ -89,8 +89,7 @@ public class AgentCharacter : MonoBehaviour, IMovable, IRotatable, IJumpable, ID
         {
             _mover.ChangeSpeed(_movementSpeedInjured);
             _soundService.SetInjuredState();
-        }         
-            
+        }                     
     }
 
     public int GetCurrentHealth() => _health.Value;

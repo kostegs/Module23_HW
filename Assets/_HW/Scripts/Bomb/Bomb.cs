@@ -8,7 +8,7 @@ public class Bomb : MonoBehaviour
     [SerializeField] private int _explosiveDamage;
     [SerializeField] private LayerMask _explosiveObjectsMask;
     [SerializeField] private BombView _view;
-    [SerializeField] private BombSoundService _soundService;
+    [SerializeField] private BombSound _soundService;
     [SerializeField] private float _timeToExplode;
 
     public float ExplosiveRadius => _explosiveRadius;    

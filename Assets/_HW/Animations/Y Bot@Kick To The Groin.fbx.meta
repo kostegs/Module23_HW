@@ -57,7 +57,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.9890683
+      - time: 0.98101455
         functionName: StopInjuringAnimation
         data: 
         objectReferenceParameter: {instanceID: 0}

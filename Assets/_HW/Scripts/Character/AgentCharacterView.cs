@@ -1,4 +1,6 @@
+using Cinemachine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AgentCharacterView : MonoBehaviour
@@ -7,6 +9,7 @@ public class AgentCharacterView : MonoBehaviour
     private readonly int DeathKey = Animator.StringToHash("Death");
     private readonly int IsRunningKey = Animator.StringToHash("IsRunning");
     private readonly int IsJumpingKey = Animator.StringToHash("IsJumping");
+    private const string DissolveEdgeKey = "_Edge";
 
     private const int InjuredLayerIndex = 1;
     private const int ExplosionInjuredLayerIndex = 2;
@@ -17,6 +20,7 @@ public class AgentCharacterView : MonoBehaviour
 
     [SerializeField] private Animator _animator;
     [SerializeField] private ParticleSystem _debuffAnimation;
+    [SerializeField] private CinemachineVirtualCamera _camera;
     
     [SerializeField] private ShimmingGlowingCircle _glowingCircle;
     [SerializeField] private bool _enableGlowingCircle;    
@@ -25,6 +29,8 @@ public class AgentCharacterView : MonoBehaviour
     [SerializeField] private float _injuredBlinkTime;
     [SerializeField] private float _timeToShowShimCircleGlow;
 
+    [SerializeField] private float _timeToDissolveAfterDeath;
+
     private IMovable _movable;
     private IDamageable _damageable;
     private IJumpable _jumpable;
@@ -32,6 +38,7 @@ public class AgentCharacterView : MonoBehaviour
     private bool _isInitialized;
     private bool _switchedToInjureAnimations;
     private int _healthToSwitchToInjuredAnimations;
+    private Dictionary<SkinnedMeshRenderer, MaterialPropertyBlock> _materials;
 
     private Coroutine _injuredShimmerCoroutine;
 
@@ -44,7 +51,17 @@ public class AgentCharacterView : MonoBehaviour
         _movable = movable;
         _damageable = damageable;
         _jumpable = jumpable;
-        _healthToSwitchToInjuredAnimations = healthToSwitchToInjuredAnimations;    
+        _healthToSwitchToInjuredAnimations = healthToSwitchToInjuredAnimations;
+        
+        SkinnedMeshRenderer[] renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+        _materials = new();
+
+        foreach (SkinnedMeshRenderer renderer in renderers)
+        {
+            MaterialPropertyBlock propertyBlock = new();
+            renderer.GetPropertyBlock(propertyBlock);
+            _materials.Add(renderer, propertyBlock);
+        }
 
         _isInitialized = true;        
     }
@@ -54,20 +71,8 @@ public class AgentCharacterView : MonoBehaviour
         if (_isInitialized == false)
             return;
 
-        if (_jumpable.InJumpingProcess)
-        {
-            _animator.SetBool(IsJumpingKey, true);
-            return;
-        }
-        else
-        {
-            _animator.SetBool(IsJumpingKey, false);
-        }            
-
-        if (_movable.InMovingProcess)            
-            _animator.SetBool(IsRunningKey, true);        
-        else        
-            _animator.SetBool(IsRunningKey, false);               
+        _animator.SetBool(IsJumpingKey, _jumpable.InJumpingProcess);
+        _animator.SetBool(IsRunningKey, _movable.InMovingProcess && !_jumpable.InJumpingProcess);                
         
         if(_damageable.GetCurrentHealth() <= _healthToSwitchToInjuredAnimations
             && _switchedToInjureAnimations == false)
@@ -86,6 +91,12 @@ public class AgentCharacterView : MonoBehaviour
         if (_enableGlowingCircle)
             GlowingCircleProcessInjure();        
     }
+
+    // Animation event - don't kill it
+    public void StopInjuringAnimation() => _animator.SetLayerWeight(ExplosionInjuredLayerIndex, InjuredLayerWeightOff);
+
+    // Animation event - don't kill it
+    public void ProcessDissolve() => StartCoroutine(DissolveCoroutine());
 
     private void GlowingCircleProcessInjure()
     {
@@ -112,7 +123,32 @@ public class AgentCharacterView : MonoBehaviour
         yield return null;
     }
 
-    public void ProcessDeath() => _animator.SetTrigger(DeathKey);
+    public void ProcessDeath() => _animator.SetTrigger(DeathKey);        
+    
+    private IEnumerator DissolveCoroutine()
+    {
+        // TODO: move it to a right place
+        _camera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset = new Vector3(0f, 3f, -2.5f);
 
-    public void StopInjuringAnimation() => _animator.SetLayerWeight(ExplosionInjuredLayerIndex, InjuredLayerWeightOff);   
+        yield return StartCoroutine(GlowingCircleChangeColors(_glowCircleColorInjured1, _glowCircleColorInjured1, _glowCircleColorInjured1, 0, 0));
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime <= _timeToDissolveAfterDeath)
+        {
+            foreach (KeyValuePair<SkinnedMeshRenderer, MaterialPropertyBlock> KeyValue in _materials)            
+                SetFloatToRenderer(KeyValue.Key, KeyValue.Value, DissolveEdgeKey, elapsedTime / _timeToDissolveAfterDeath);            
+            
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        
+        _glowingCircle.gameObject.SetActive(false);
+    }
+
+    private void SetFloatToRenderer(SkinnedMeshRenderer renderer, MaterialPropertyBlock propertyBlock, string key, float value)
+    {
+        propertyBlock.SetFloat(key, value);
+        renderer.SetPropertyBlock(propertyBlock);
+    }
 }

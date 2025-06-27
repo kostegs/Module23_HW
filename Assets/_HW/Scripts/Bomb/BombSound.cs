@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BombSoundService : MonoBehaviour
+public class BombSound : MonoBehaviour
 {
     [SerializeField] private SoundPlayer _explosionSoundPlayer;
 

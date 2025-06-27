@@ -1,8 +1,8 @@
 public interface IClickableButton
 {
-    void OnMouseOver();
+    void OnButtonOver();
 
-    void OnMouseExit();
+    void OnButtonExit();
 
-    void OnMouseClick();    
+    void OnButtonClick();    
 }

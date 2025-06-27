@@ -14,6 +14,7 @@ public class SoundService : MonoBehaviour
     private float _cachedEffectsVolume;
 
     public void TurnFxOnOff(bool turnOn) => TurnSoundOnOff(EffectsKey, turnOn, _cachedEffectsVolume);
+
     public void TurnMusicOnOff(bool turnOn) => TurnSoundOnOff(MusicKey, turnOn, _cachedMusicVolume);    
 
     private void TurnSoundOnOff(string key, bool turnOn, float cachedVolume)

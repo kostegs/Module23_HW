@@ -1,7 +1,6 @@
-using System.Collections;
 using UnityEngine;
 
-public class AgentCharacterSoundService : MonoBehaviour
+public class AgentCharacterSound : MonoBehaviour
 {
     [SerializeField] private SoundPlayer _movableSoundPlayer;
     [SerializeField] private SoundPlayer _jumpableSoundPlayer;
@@ -48,10 +47,7 @@ public class AgentCharacterSoundService : MonoBehaviour
 
     public void ProcessInjure() => _injuredSoundPlayer.PlayOneShot();
 
-    public void SetInjuredState()
-    {
-        _movableSoundPlayer.SetPitch(_injuredPitch);
-    }
+    public void SetInjuredState() => _movableSoundPlayer.SetPitch(_injuredPitch);
 
     private void CheckPlayJumpSound()
     {

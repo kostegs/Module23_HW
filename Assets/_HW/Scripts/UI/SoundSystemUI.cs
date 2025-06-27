@@ -15,17 +15,19 @@ public class SoundSystemUI : MonoBehaviour
     private List<RaycastResult> _raycastResults;
     private PointerEventData _pointerEventData;
     private SoundService _soundService;
+    private InputService _inputService;
 
-    public void Initialize(SoundService soundService)
+    public void Initialize(SoundService soundService, InputService inputService)
     {
         _raycastResults = new List<RaycastResult>();
         _pointerEventData = new PointerEventData(EventSystem.current);
         _soundService = soundService;
+        _inputService = inputService;
     }
 
     void Update()
     {
-        _pointerEventData.position = Input.mousePosition;
+        _pointerEventData.position = _inputService.GetCurrentCursorPosition();
 
         _raycastResults.Clear();
         _raycaster.Raycast(_pointerEventData, _raycastResults);
@@ -42,18 +44,19 @@ public class SoundSystemUI : MonoBehaviour
         if (_currentHoveredButton != _newHoveredButton)
         {
             if (_currentHoveredButton != null)
-                _currentHoveredButton.OnMouseExit();
+                _currentHoveredButton.OnButtonExit();
 
             if (_newHoveredButton != null)
-                _newHoveredButton.OnMouseOver();
+                _newHoveredButton.OnButtonOver();
 
             _currentHoveredButton = _newHoveredButton;
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (_inputService.IsButtonDown())
             if (_currentHoveredButton != null)
             {
-                _currentHoveredButton.OnMouseClick();
+                _currentHoveredButton.OnButtonClick();
+                
                 bool isTurnOn = _currentHoveredButton.IsTurnOn;
 
                 if (_currentHoveredButton == _musicButton)

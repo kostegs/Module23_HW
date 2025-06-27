@@ -10,7 +10,7 @@ public class UITurnOnOffButton : MonoBehaviour, ITurnOnTurnOffButton
     [SerializeField] private Sprite _imageTurnOff;
 
     private bool _isTurnOn;
-    private bool _isMouseOver;
+    private bool _isButtonOver;
     private Image _image;
     private Vector3 _cachedScale;
 
@@ -23,7 +23,7 @@ public class UITurnOnOffButton : MonoBehaviour, ITurnOnTurnOffButton
         _isTurnOn = true;
     }    
 
-    public void OnMouseClick()
+    public void OnButtonClick()
     {
         if (_isTurnOn)
             _image.sprite = _imageTurnOff;
@@ -33,20 +33,19 @@ public class UITurnOnOffButton : MonoBehaviour, ITurnOnTurnOffButton
         _isTurnOn = !_isTurnOn;
     }    
 
-    public void OnMouseOver()
+    public void OnButtonOver()
     {
-        if (_isMouseOver == false)
+        if (_isButtonOver == false)
         {
-            Debug.Log("Mouse over");
-            _isMouseOver = true;
+            _isButtonOver = true;
             _cachedScale = transform.localScale;
             transform.localScale = Vector3.Scale(transform.localScale, new Vector3(LocalScaleCoefficiency, LocalScaleCoefficiency, LocalScaleCoefficiency));
         }       
     }
 
-    public void OnMouseExit()
+    public void OnButtonExit()
     {
-        _isMouseOver = false;
+        _isButtonOver = false;
         transform.localScale = _cachedScale;
     }
 }

@@ -1,3 +1,4 @@
+using Cinemachine;
 using UnityEngine;
 
 public class Bootstrap : MonoBehaviour
@@ -21,6 +22,9 @@ public class Bootstrap : MonoBehaviour
         _Example.Initialize(inputService);
         _character.Initialize();
         _healthBar.Initialize(_character);
-        _soundSystemUI.Initialize(_soundService);
+        _soundSystemUI.Initialize(_soundService, inputService);
+
+        CinemachineBrain cinemachineBrain = Camera.main.GetComponent<CinemachineBrain>();
+        ICinemachineCamera activeCamera = cinemachineBrain.ActiveVirtualCamera;        
     }
 }
